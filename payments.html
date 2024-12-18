@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <style>
+        body{
+            /* background-color: #D4F6FF; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 95vh;
+        }
+        h3{
+            color: #00bcd4;
+            font-size: x-large;
+        }
+        ul{
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        ul>div{
+            font-size: large;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 250px;
+            box-shadow: 4px 3px 2px gray;
+            padding: 5px;
+            cursor: pointer;
+        }
+        ul div img{
+            height: 30px;
+        }
+        div:hover{
+            scale: 1.03;
+        }
+        div{
+            background-color: ;
+        }
+        button{
+            color: white;
+            background-color: #257180;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 2%;
+        }
+        button:hover{
+            color: #257180;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <h3>Online Payment Options</h3>
+        <ul>
+            <div><input type="radio" name="Payment" ><img src="./images/credit-card (1).png" alt="UPI"> UPI (Pay via any App)</div>
+            <div><input type="radio" name="Payment" ><img src="./images/upi.png" alt="creditCard">Credit/Debit Card</div>
+            <div><input type="radio" name="Payment" ><img src="./images/paylater.png" alt="PayLater"> Pay Later</div>
+            <div><input type="radio" name="Payment" ><img src="./images/wallet.png" alt="wallets"> Wallets</div>
+            <div><input type="radio" name="Payment" ><img src="./images/emi.png" alt="EMI"> EMI</div>
+            <div><input type="radio" name="Payment" ><img src="./images/online-banking.png" alt="netBanking"> Net Banking</div>
+        </ul>
+
+        <h3>Pay on Delivery (Cash/UPI)</h3>
+        <ul>
+            <div><input type="radio" name="Payment" ><img src="./images/cash-on-delivery.png" alt="COD">Cash on Delivery</div>
+        </ul>
+
+        <button id="payNow">Pay Now</button>
+
+
+    <script>
+        let payBtn=document.getElementById("payNow")
+        let select=document.getElementsByName("Payment")
+        payBtn.style.display="none"
+        select.forEach(x=>{
+            x.addEventListener("click",()=>{
+            payBtn.style.display="block"
+          })
+        })
+
+
+          
+        payBtn.addEventListener("click",()=>{
+            document.body.style.opacity="0.2"
+            setTimeout(()=>{
+                alert("Order Placed Successfully")
+                window.location.href="cart.html"
+            },2000)
+        })
+    </script>
+</body>
+</html>
