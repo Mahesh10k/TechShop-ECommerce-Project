@@ -252,6 +252,8 @@ if(localStorage.getItem("isLoggedIn") === "true"){
     if(confirm("Do you want to Logout")){
       localStorage.setItem("isLoggedIn","false");
       alert("You are Logged Out seccesssfully")
+      Login.id="Login"
+      Login.title="Login"
       home()
     }
   })
