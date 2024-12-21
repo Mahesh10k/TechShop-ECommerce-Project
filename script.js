@@ -254,7 +254,6 @@ if(localStorage.getItem("isLoggedIn") === "true"){
       alert("You are Logged Out seccesssfully")
       Login.id="Login"
       Login.title="Login"
-      home()
     }
   })
 }
