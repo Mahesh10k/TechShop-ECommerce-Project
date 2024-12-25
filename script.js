@@ -155,8 +155,7 @@ mobile.forEach(x=>x.addEventListener("click",(event)=>{
   let filteredMobiles=APIdata.filter(x=>x.category.includes("mobiles"))
   display(filteredMobiles)
   }else {
-       alert("Please login to view products.");
-       window.location.href="login.html"
+         warningPopUp()
       }
 }))
 
@@ -167,8 +166,7 @@ laptop.forEach(x=>x.addEventListener("click",(event)=>{
     let filteredLaptops=APIdata.filter(x=>x.category.includes("laptops"))
     display(filteredLaptops)
   }else{
-    alert("Please login to view products.");
-    window.location.href="login.html"
+    warningPopUp()
   }
 }))
 
@@ -179,8 +177,7 @@ watch.forEach(x=>x.addEventListener("click",(event)=>{
   let filteredWatch=APIdata.filter(x=>x.category.includes("watches"))
   display(filteredWatch)
   }else{
-    alert("Please login to view products.");
-    window.location.href="login.html"
+    warningPopUp()
   }
 }))
 
@@ -205,8 +202,7 @@ function viewCart() {
   if (localStorage.getItem("isLoggedIn") === "true") {
     window.location.href = "cart.html"; // Redirect to cart page
   } else {
-    alert("Please login to view your cart.");
-    window.location.href="login.html"
+    warningPopUp()
   }
 }
 
@@ -233,8 +229,7 @@ search.addEventListener("click",(event)=>{
       Home.style.display = "none";
       display(filteredProducts);
   } else {
-    alert("Please login to view products.");
-    return;
+    warningPopUp()
   }
 }) 
 
@@ -243,12 +238,13 @@ search.addEventListener("click",(event)=>{
 //Logout Process
 let userId=localStorage.getItem("Name")
 let Login=document.querySelector("#login")
-let loginSpan=document.getElementById("loginSpan")  
+let loginSpan=document.getElementById("loginSpan")
 if(localStorage.getItem("isLoggedIn") === "true"){
   loginSpan.textContent=`${userId}`
   Login.id="logout"
   Login.title="Logout"
-  Login.addEventListener("click",()=>{ 
+  let Logout=document.querySelector("#logout")
+  Logout.addEventListener("click",()=>{ 
     if(confirm("Do you want to Logout")){
       localStorage.setItem("isLoggedIn","false");
       alert("You are Logged Out seccesssfully")
@@ -257,6 +253,29 @@ if(localStorage.getItem("isLoggedIn") === "true"){
     }
   })
 }
+
+// popup Alert
+function warningPopUp(){
+    const section = document.querySelector("#section"),
+       overlay = document.querySelector(".overlay"),
+      closeBtn = document.querySelector(".close-btn"),
+      loginRedirect=document.querySelector("#loginRedirect");
+
+     section.classList.add("active")
+
+    overlay.addEventListener("click", () =>
+      section.classList.remove("active")
+    );
+
+    closeBtn.addEventListener("click", () =>
+      section.classList.remove("active")
+    );
+
+    loginRedirect.addEventListener("click",()=>{
+      window.location.href="login.html"
+    })
+
+  }
 
 
 
