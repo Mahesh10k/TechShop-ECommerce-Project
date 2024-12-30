@@ -674,6 +674,9 @@ button.show-modal,
   section {
     padding: 3rem 2rem;
   }
+  .logo{
+    font-size: 1.8rem;
+  }
   .icons span{
     display: none;
   }
