@@ -222,7 +222,7 @@
 
                 //remove cart process
                 cartCard.querySelector("#remove").addEventListener("click", () => {
-                    if (confirm("Are you sure to want to remove the item")) {
+                    // if (confirm("Are you sure to want to remove the item")) {
                         cartCard.remove();
                         cartData.splice(index, 1)
                         if (cartData.length === 0) {
@@ -230,7 +230,7 @@
                             amountDiv.style.display="none"
                             
                         }
-                    }
+                    // }
                     localStorage.setItem("cart", JSON.stringify(cartData))
                 })
 
@@ -239,7 +239,7 @@
                 // buyNow process
                 cartCard.querySelector("#buyNow").addEventListener("click", (event) => {
                     event.preventDefault();
-                    if (confirm("Are you sure to want to Buy the Item")) {
+                    // if (confirm("Are you sure to want to Buy the Item")) {
                         window.location.href = "payments.html"
                         card.remove()
                         cartData.splice(index,1)
@@ -248,7 +248,7 @@
                             amountDiv.style.display="none"
                             
                         }
-                    }
+                    // }
                     localStorage.setItem("cart", JSON.stringify(cartData))
                     if(localStorage.getItem("cart").length==0){
                         amountDiv.style.display="none"
@@ -259,7 +259,7 @@
                   let placeOrder=document.getElementById("place-order")
                   placeOrder.addEventListener("click", () => {
                     // event.preventDefault();
-                    if (confirm("Are you sure to want to Buy the all Items")) {
+                    // if (confirm("Are you sure to want to Buy the all Items")) {
                         window.location.href = "payments.html"
 
                         if (cartData.length === 0) {
@@ -267,7 +267,7 @@
                             amountDiv.style.display="none"  
                             
                         }
-                    }
+                    // }
                     localStorage.setItem("cart", JSON.stringify(cartData))
 
                 })

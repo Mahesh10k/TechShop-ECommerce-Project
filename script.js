@@ -276,12 +276,6 @@ function warningPopUp() {
 
 // Confirm the item to add to cart
 function confirmCart(item) {
-  const section = document.querySelector("#section"),
-    overlay = document.querySelector(".overlay"),
-    closeBtn = document.querySelector(".close-btn"),
-    loginRedirect = document.querySelector("#loginRedirect"),
-    h2=document.getElementById("h2"),
-    h3=document.getElementById("h3")
   section.classList.add("active");
   overlay.addEventListener("click", () => section.classList.remove("active"));
   closeBtn.addEventListener("click", () => section.classList.remove("active"));
@@ -293,14 +287,8 @@ function confirmCart(item) {
   });
 }
 
-// already exists in the cart
+// Item already exists in the cart
 function alreadyCart() {
-  const section = document.querySelector("#section"),
-    overlay = document.querySelector(".overlay"),
-    closeBtn = document.querySelector(".close-btn"),
-    loginRedirect = document.querySelector("#loginRedirect"),
-    h2=document.getElementById("h2"),
-    h3=document.getElementById("h3")
   section.classList.add("active");
   overlay.addEventListener("click", () => section.classList.remove("active"));
   closeBtn.addEventListener("click", () => section.classList.remove("active"));
@@ -312,14 +300,8 @@ function alreadyCart() {
   });
 }
 
-
+// Logout alert
 function logoutAlert() {
-  const section = document.querySelector("#section"),
-    overlay = document.querySelector(".overlay"),
-    closeBtn = document.querySelector(".close-btn"),
-    loginRedirect = document.querySelector("#loginRedirect"),
-    h2=document.getElementById("h2"),
-    h3=document.getElementById("h3")
   section.classList.add("active");
   overlay.addEventListener("click", () => section.classList.remove("active"));
   closeBtn.addEventListener("click", () => section.classList.remove("active"));

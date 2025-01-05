@@ -385,11 +385,25 @@
           localStorage.setItem("isLoggedIn", "true");
           document.getElementById("loginemail").value = ""
           document.getElementById("loginpassword").value = ""
-          document.querySelector(".wrapper").style.display = "none";
-          setTimeout(() => {
-            loginAlert()
-            window.location.href = "index.html"
-          }, 2000)
+          document.querySelector(".wrapper").style.display = "none"
+          setTimeout(()=>{
+            const section = document.querySelector("#section"),
+              overlay = document.querySelector(".overlay"),
+              closeBtn = document.querySelector(".close-btn"),
+              loginRedirect = document.querySelector("#loginRedirect"),
+              h2 = document.querySelector("#h2"),
+              h3 = document.querySelector("#h3")
+            section.classList.add("active");
+            overlay.addEventListener("click", () => section.classList.remove("active"));
+            closeBtn.addEventListener("click", () => section.classList.remove("active"));
+            h2.textContent = "Login Success"
+            h3.textContent = `You are Loggedin Succesfully!`
+            document.getElementById("loginRedirect").style.display="none"
+          },2000)
+            setTimeout(()=>{
+              window.location.href = "index.html"
+            },3000)
+         
 
         } else {
           wrongLoginAlert()
@@ -413,24 +427,6 @@
         document.getElementById("loginRedirect").style.display = "none"
       }
 
-      // Login Alert
-      function loginAlert() {
-        const section = document.querySelector("#section"),
-          overlay = document.querySelector(".overlay"),
-          closeBtn = document.querySelector(".close-btn"),
-          loginRedirect = document.querySelector("#loginRedirect"),
-          h2 = document.getElementById("h2"),
-          h3 = document.getElementById("h3")
-        section.classList.add("active");
-        overlay.addEventListener("click", () => section.classList.remove("active"));
-        closeBtn.addEventListener("click", () => section.classList.remove("active"));
-        h2.textContent = "LoggedIn"
-        h3.textContent = `You are Loggedin Succesfully!`
-        document.getElementById("loginRedirect").textContent = "Home"
-        loginRedirect.addEventListener("click", () => {
-          window.location.href = "index.html"
-        });
-      }
 
       // wrong credentials
       function wrongLoginAlert() {
