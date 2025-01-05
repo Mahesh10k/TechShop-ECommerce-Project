@@ -1,24 +1,21 @@
 //navbar closing function
-searchForm = document.querySelector('.search-form');
-document.querySelector('#search-btn').onclick = () =>{
-  searchForm.classList.toggle('active');
+searchForm = document.querySelector(".search-form");
+document.querySelector("#search-btn").onclick = () => {
+  searchForm.classList.toggle("active");
+};
+document.querySelector("#search-btn").onclick = () => {
+  searchForm.classList.toggle("active");
+};
 
-} 
-document.querySelector('#search-btn').onclick = () =>{
-  searchForm.classList.toggle('active');
-}
-
-
-
-let Home=document.querySelector("section") //Home section
-let productsDiv=document.getElementById("productsDiv")  //Products displaying
-let cardView=document.getElementById("cardView")
+let Home = document.querySelector("section"); //Home section
+let productsDiv = document.getElementById("productsDiv"); //Products displaying
+let cardView = document.getElementById("cardView");
 
 //home clicking function
 function home() {
   Home.style.display = "block";
   productsDiv.innerHTML = "";
-  cardView.innerHTML="";
+  cardView.innerHTML = "";
 }
 
 const url1 = "https://ecommerce-api3.p.rapidapi.com/mobiles";
@@ -48,73 +45,63 @@ const options3 = {
   },
 };
 
-
-
-
-let allData=[]
-let APIdata=JSON.parse(localStorage.getItem("API")) || []
+let allData = [];
+let APIdata = JSON.parse(localStorage.getItem("API")) || [];
 async function mobiles() {
-    let response=await fetch(url1,options1)
-    let data=await response.json()
-    data.forEach(element => {
-        element.category="mobiles"
-        allData.push(element)
-    });
-    localStorage.setItem("API",JSON.stringify(allData))
+  let response = await fetch(url1, options1);
+  let data = await response.json();
+  data.forEach((element) => {
+    element.category = "mobiles";
+    allData.push(element);
+  });
+  localStorage.setItem("API", JSON.stringify(allData));
 }
-mobiles()
+mobiles();
 
 async function laptops() {
-    let response=await fetch(url2,options2)
-    let data=await response.json()
-    data.forEach(element => {
-        element.category="laptops"
-        allData.push(element)
-    });
-    localStorage.setItem("API",JSON.stringify(allData))
-
+  let response = await fetch(url2, options2);
+  let data = await response.json();
+  data.forEach((element) => {
+    element.category = "laptops";
+    allData.push(element);
+  });
+  localStorage.setItem("API", JSON.stringify(allData));
 }
-laptops()
+laptops();
 
 async function watches() {
-    let response=await fetch(url3,options3)
-    let data=await response.json()
-    data.forEach(element => {
-        element.category="watches"
-        allData.push(element)
-    });
-    localStorage.setItem("API",JSON.stringify(allData)) 
-
+  let response = await fetch(url3, options3);
+  let data = await response.json();
+  data.forEach((element) => {
+    element.category = "watches";
+    allData.push(element);
+  });
+  localStorage.setItem("API", JSON.stringify(allData));
 }
-watches()
-
+watches();
 
 // cards Display
 function display(allData) {
-  productsDiv.innerHTML=""
-  cardView.innerHTML=""
-  // console.log(allData)
-  allData.forEach(x=>{
-    let card=document.createElement("div")
-    card.setAttribute("id","card")
-    card.innerHTML=
-    ` <img id="img" src="${x.Image}" >
+  productsDiv.innerHTML = "";
+  cardView.innerHTML = "";
+  allData.forEach((x) => {
+    let card = document.createElement("div");
+    card.setAttribute("id", "card");
+    card.innerHTML = ` <img id="img" src="${x.Image}" >
       <p id="brand">${x.Brand}</p>
       <p id="description">${x.Description}</p>
       <p id="price"><b>Price: ${x.Price}</b></p>
-      <button class="btn btn-success" id="addToCart">Add to Cart</button`
-      productsDiv.appendChild(card);
+      <button class="btn btn-success" id="addToCart">Add to Cart</button`;
+    productsDiv.appendChild(card);
 
-      card.querySelector("#addToCart").addEventListener("click",()=>{
-        addToCart(x) 
-      })
-      
-      //single card view
-      
-      card.addEventListener("click",()=>{
-        productsDiv.innerHTML=""
-        cardView.innerHTML=
-        `<button id="back">Back</button>
+    card.querySelector("#addToCart").addEventListener("click", () => {
+      addToCart(x);
+    });
+
+    //single card view
+    card.addEventListener("click", () => {
+      productsDiv.innerHTML = "";
+      cardView.innerHTML = `<button id="back">Back</button>
         <div class="cardView"> 
         <img src="${x.Image}">
         <div><p>${x.Brand}</p>
@@ -123,78 +110,84 @@ function display(allData) {
         <p><b>Price: ${x.Price}</b></p>
         <button class="btn btn-success" id="addCart">Add to Cart</button>
         <button class="btn btn-success" id="buy">Buy Now</button>
-        </div>`
-       
-        document.getElementById("addCart") .addEventListener("click",()=>{
-          addToCart(x)
-        })
-        document.getElementById("buy").addEventListener("click",()=>{
-          if (confirm("Are you sure to want to Buy the Item")) {
-               window.location.href = "payments.html"
-          }
-        })   
-        
-        let back=document.getElementById("back")
-        back.addEventListener("click",()=>{
-          cardView.innerHTML=""
-          display(allData)
-        })
-      })
-  })
+        </div>`;
+
+      document.getElementById("addCart").addEventListener("click", () => {
+        addToCart(x);
+      });
+      document.getElementById("buy").addEventListener("click", () => {
+        if (confirm("Are you sure to want to Buy the Item")) {
+          window.location.href = "payments.html";
+        }
+      });
+
+      let back = document.getElementById("back");
+      back.addEventListener("click", () => {
+        cardView.innerHTML = "";
+        display(allData);
+      });
+    });
+  });
 }
 
+let mobile = document.querySelectorAll("#getMobiles");
+let laptop = document.querySelectorAll("#getLaptops");
+let watch = document.querySelectorAll("#getWatches");
 
-let mobile=document.querySelectorAll("#getMobiles")
-let laptop=document.querySelectorAll("#getLaptops")
-let watch=document.querySelectorAll("#getWatches")
+mobile.forEach((x) =>
+  x.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      Home.style.display = "none";
+      let filteredMobiles = APIdata.filter((x) =>
+        x.category.includes("mobiles")
+      );
+      display(filteredMobiles);
+    } else {
+      warningPopUp();
+    }
+  })
+);
 
-mobile.forEach(x=>x.addEventListener("click",(event)=>{
-  event.preventDefault();
-  if (localStorage.getItem("isLoggedIn") === "true") {
-          Home.style.display = "none";
-  let filteredMobiles=APIdata.filter(x=>x.category.includes("mobiles"))
-  display(filteredMobiles)
-  }else {
-         warningPopUp()
-      }
-}))
+laptop.forEach((x) =>
+  x.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      Home.style.display = "none";
+      let filteredLaptops = APIdata.filter((x) =>
+        x.category.includes("laptops")
+      );
+      display(filteredLaptops);
+    } else {
+      warningPopUp();
+    }
+  })
+);
 
-laptop.forEach(x=>x.addEventListener("click",(event)=>{
-  event.preventDefault();
-  if (localStorage.getItem("isLoggedIn") === "true") {
-    Home.style.display = "none";
-    let filteredLaptops=APIdata.filter(x=>x.category.includes("laptops"))
-    display(filteredLaptops)
-  }else{
-    warningPopUp()
-  }
-}))
-
-watch.forEach(x=>x.addEventListener("click",(event)=>{
-  event.preventDefault();
-  if (localStorage.getItem("isLoggedIn") === "true") {
-    Home.style.display = "none";
-  let filteredWatch=APIdata.filter(x=>x.category.includes("watches"))
-  display(filteredWatch)
-  }else{
-    warningPopUp()
-  }
-}))
-
-
+watch.forEach((x) =>
+  x.addEventListener("click", (event) => {
+    event.preventDefault();
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      Home.style.display = "none";
+      let filteredWatch = APIdata.filter((x) => x.category.includes("watches"));
+      display(filteredWatch);
+    } else {
+      warningPopUp();
+    }
+  })
+);
 
 //add to cart process
 function addToCart(item) {
-  let cartData = JSON.parse(localStorage.getItem("cart")) || []; // Load cart from localStorage 
-  let exists = cartData.find(x => x.Description === item.Description); 
-  if(!exists){
+  let cartData = JSON.parse(localStorage.getItem("cart")) || []; // Load cart from localStorage
+  let exists = cartData.find((x) => x.Description === item.Description);
+  if (!exists) {
     cartData.push(item);
-    alert(`${item.Brand} has been added to your cart!`);
-    localStorage.setItem("cart", JSON.stringify(cartData));   // Save cart to localStorage
+    confirmCart(item.Brand)
+    localStorage.setItem("cart", JSON.stringify(cartData)); // Save cart to localStorage
+  } else {
+    alreadyCart()
   }
-  else {
-   alert(`${item.Brand} is already in your cart!`);
- }
 }
 
 // View cart process
@@ -202,80 +195,137 @@ function viewCart() {
   if (localStorage.getItem("isLoggedIn") === "true") {
     window.location.href = "cart.html"; // Redirect to cart page
   } else {
-    warningPopUp()
+    warningPopUp();
   }
 }
 
 //searchFunction
-let search=document.querySelector("#searchbtn")
-search.addEventListener("click",(event)=>{
+let search = document.querySelector("#searchbtn");
+search.addEventListener("click", (event) => {
   event.preventDefault();
   if (localStorage.getItem("isLoggedIn") === "true") {
     let keyword = document.getElementById("search").value.toLowerCase().trim();
-     Home.style.display = "none";
-  if(keyword==""){
-    productsDiv.innerHTML =`Please Enter the Valid Name to Search`
-  }
+    Home.style.display = "none";
+    if (keyword == "") {
+      productsDiv.innerHTML = `Please Enter the Valid Name to Search`;
+    }
     // Filter products of saerch keyword
-    const filteredProducts = APIdata.filter((product) =>
+    const filteredProducts = APIdata.filter(
+      (product) =>
         product.Brand.toLowerCase().includes(keyword) ||
         product.category.toLowerCase().includes(keyword) ||
-        product.Description.toLowerCase().includes(keyword))
-        console.log(filteredProducts)
+        product.Description.toLowerCase().includes(keyword)
+    );
+    console.log(filteredProducts);
     if (filteredProducts.length === 0) {
       productsDiv.innerHTML = `<p>No products found for "${keyword}".</p>`;
       return;
     }
-      Home.style.display = "none";
-      display(filteredProducts);
+    Home.style.display = "none";
+    display(filteredProducts);
   } else {
-    warningPopUp()
+    warningPopUp();
   }
-}) 
-
-
+});
 
 //Logout Process
-let userId=localStorage.getItem("Name")
-let Login=document.querySelector("#login")
-let loginSpan=document.getElementById("loginSpan")
-if(localStorage.getItem("isLoggedIn") === "true"){
-  loginSpan.textContent=`${userId}`
-  Login.id="logout"
-  Login.title="Logout"
-  let Logout=document.querySelector("#logout")
-  Logout.addEventListener("click",()=>{ 
-    if(confirm("Do you want to Logout")){
-      localStorage.setItem("isLoggedIn","false");
-      alert("You are Logged Out seccesssfully")
-      Login.id="Login"
-      Login.title="Login"
-    }
-  })
+let userId = localStorage.getItem("Name");
+let Login = document.querySelector("#login");
+if (localStorage.getItem("isLoggedIn") !== "true"){
+    Login.addEventListener("click",()=>{
+      window.location.href="login.html"
+    })
+}
+let loginSpan = document.getElementById("loginSpan");
+const section = document.querySelector("#section"),
+overlay = document.querySelector(".overlay"),
+closeBtn = document.querySelector(".close-btn"),
+loginRedirect = document.querySelector("#loginRedirect"),
+h2=document.getElementById("h2"),
+h3=document.getElementById("h3")
+if (localStorage.getItem("isLoggedIn") == "true") {
+  loginSpan.textContent = `${userId}`;
+  Login.addEventListener("click", () => {
+    section.classList.add("active");
+    overlay.addEventListener("click", () => section.classList.remove("active"));
+    closeBtn.addEventListener("click", () => section.classList.remove("active"));
+    h2.textContent="Warning"
+    h3.textContent=`Do you Want to Logout`
+    document.getElementById("loginRedirect").textContent="Logout"
+    loginRedirect.addEventListener("click", () => {
+      localStorage.setItem("isLoggedIn", "false")
+      logoutAlert()
+      window.location.href="index.html"
+    });
+  });
 }
 
 // popup Alert
-function warningPopUp(){
-    const section = document.querySelector("#section"),
-       overlay = document.querySelector(".overlay"),
-      closeBtn = document.querySelector(".close-btn"),
-      loginRedirect=document.querySelector("#loginRedirect");
+function warningPopUp() {
+  const section = document.querySelector("#section"),
+    overlay = document.querySelector(".overlay"),
+    closeBtn = document.querySelector(".close-btn"),
+    loginRedirect = document.querySelector("#loginRedirect");
+  section.classList.add("active");
+  overlay.addEventListener("click", () => section.classList.remove("active"));
+  closeBtn.addEventListener("click", () => section.classList.remove("active"));
+  loginRedirect.addEventListener("click", () => {
+    window.location.href = "login.html";
+  });
+}
 
-     section.classList.add("active")
+// Confirm the item to add to cart
+function confirmCart(item) {
+  const section = document.querySelector("#section"),
+    overlay = document.querySelector(".overlay"),
+    closeBtn = document.querySelector(".close-btn"),
+    loginRedirect = document.querySelector("#loginRedirect"),
+    h2=document.getElementById("h2"),
+    h3=document.getElementById("h3")
+  section.classList.add("active");
+  overlay.addEventListener("click", () => section.classList.remove("active"));
+  closeBtn.addEventListener("click", () => section.classList.remove("active"));
+  h2.textContent="Product Added"
+  h3.textContent=`${item} Added to Cart`
+  document.getElementById("loginRedirect").textContent="Cart"
+  loginRedirect.addEventListener("click", () => {
+    window.location.href = "cart.html";
+  });
+}
 
-    overlay.addEventListener("click", () =>
-      section.classList.remove("active")
-    );
+// already exists in the cart
+function alreadyCart() {
+  const section = document.querySelector("#section"),
+    overlay = document.querySelector(".overlay"),
+    closeBtn = document.querySelector(".close-btn"),
+    loginRedirect = document.querySelector("#loginRedirect"),
+    h2=document.getElementById("h2"),
+    h3=document.getElementById("h3")
+  section.classList.add("active");
+  overlay.addEventListener("click", () => section.classList.remove("active"));
+  closeBtn.addEventListener("click", () => section.classList.remove("active"));
+  h2.textContent="Already Exists"
+  h3.textContent=`This Item is already in your cart`
+  document.getElementById("loginRedirect").textContent="Cart"
+  loginRedirect.addEventListener("click", () => {
+    window.location.href = "cart.html";
+  });
+}
 
-    closeBtn.addEventListener("click", () =>
-      section.classList.remove("active")
-    );
 
-    loginRedirect.addEventListener("click",()=>{
-      window.location.href="login.html"
-    })
-
-  }
-
+function logoutAlert() {
+  const section = document.querySelector("#section"),
+    overlay = document.querySelector(".overlay"),
+    closeBtn = document.querySelector(".close-btn"),
+    loginRedirect = document.querySelector("#loginRedirect"),
+    h2=document.getElementById("h2"),
+    h3=document.getElementById("h3")
+  section.classList.add("active");
+  overlay.addEventListener("click", () => section.classList.remove("active"));
+  closeBtn.addEventListener("click", () => section.classList.remove("active"));
+  h2.textContent="Logged Out"
+  h3.textContent=`You are Logged Out Successfully!`
+  loginRedirect.style.display="none"
+}
 
 
