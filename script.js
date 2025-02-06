@@ -102,7 +102,7 @@ function display(allData) {
     card.addEventListener("click", () => {
       productsDiv.innerHTML = "";
       cardView.innerHTML = `<button id="back">Back</button>
-        <div class="cardView"> 
+        <div class="cardView">
         <img src="${x.Image}">
         <div><p>${x.Brand}</p>
         <p>${x.Description}</p>
@@ -116,9 +116,7 @@ function display(allData) {
         addToCart(x);
       });
       document.getElementById("buy").addEventListener("click", () => {
-        if (confirm("Are you sure to want to Buy the Item")) {
           window.location.href = "payments.html";
-        }
       });
 
       let back = document.getElementById("back");
