@@ -114,6 +114,7 @@ function display(allData) {
 
       document.getElementById("addCart").addEventListener("click", () => {
         addToCart(x);
+      
       });
       document.getElementById("buy").addEventListener("click", () => {
           window.location.href = "payments.html";
@@ -181,10 +182,10 @@ function addToCart(item) {
   let exists = cartData.find((x) => x.Description === item.Description);
   if (!exists) {
     cartData.push(item);
-    confirmCart(item.Brand)
+    popupAlert("Success",`${item.Brand} Added to Cart`)
     localStorage.setItem("cart", JSON.stringify(cartData)); // Save cart to localStorage
   } else {
-    alreadyCart()
+    popupAlert("Warning",`This Item is already in your cart`)
   }
 }
 
@@ -226,13 +227,14 @@ search.addEventListener("click", (event) => {
   }
 });
 
+
 //Logout Process
 let userId = localStorage.getItem("Name");
 let Login = document.querySelector("#login");
 if (localStorage.getItem("isLoggedIn") !== "true"){
-    Login.addEventListener("click",()=>{
-      window.location.href="login.html"
-    })
+  Login.addEventListener("click",()=>{
+    window.location.href="login.html"
+  })
 }
 let loginSpan = document.getElementById("loginSpan");
 const section = document.querySelector("#section"),
@@ -242,14 +244,16 @@ loginRedirect = document.querySelector("#loginRedirect"),
 h2=document.getElementById("h2"),
 h3=document.getElementById("h3")
 if (localStorage.getItem("isLoggedIn") == "true") {
-  loginSpan.textContent = `${userId}`;
+  let accountname=userId?userId:"Guest"
+  loginSpan.textContent = `${accountname}`;
   Login.addEventListener("click", () => {
     section.classList.add("active");
     overlay.addEventListener("click", () => section.classList.remove("active"));
     closeBtn.addEventListener("click", () => section.classList.remove("active"));
     h2.textContent="Warning"
-    h3.textContent=`Do you Want to Logout`
-    document.getElementById("loginRedirect").textContent="Logout"
+    h3.textContent=`Do you Want to Logout ?`
+    closeBtn.textContent="No"
+    loginRedirect.textContent="Logout"
     loginRedirect.addEventListener("click", () => {
       localStorage.setItem("isLoggedIn", "false")
       logoutAlert()
@@ -257,6 +261,8 @@ if (localStorage.getItem("isLoggedIn") == "true") {
     });
   });
 }
+
+
 
 // popup Alert
 function warningPopUp() {
@@ -272,39 +278,27 @@ function warningPopUp() {
   });
 }
 
-// Confirm the item to add to cart
-function confirmCart(item) {
+// popup alert
+function popupAlert(h2Data,h3Data) {
   section.classList.add("active");
   overlay.addEventListener("click", () => section.classList.remove("active"));
   closeBtn.addEventListener("click", () => section.classList.remove("active"));
-  h2.textContent="Product Added"
-  h3.textContent=`${item} Added to Cart`
+  h2.textContent=h2Data
+  h3.textContent= h3Data
   document.getElementById("loginRedirect").textContent="Cart"
   loginRedirect.addEventListener("click", () => {
     window.location.href = "cart.html";
   });
 }
 
-// Item already exists in the cart
-function alreadyCart() {
-  section.classList.add("active");
-  overlay.addEventListener("click", () => section.classList.remove("active"));
-  closeBtn.addEventListener("click", () => section.classList.remove("active"));
-  h2.textContent="Already Exists"
-  h3.textContent=`This Item is already in your cart`
-  document.getElementById("loginRedirect").textContent="Cart"
-  loginRedirect.addEventListener("click", () => {
-    window.location.href = "cart.html";
-  });
-}
 
 // Logout alert
 function logoutAlert() {
   section.classList.add("active");
   overlay.addEventListener("click", () => section.classList.remove("active"));
   closeBtn.addEventListener("click", () => section.classList.remove("active"));
-  h2.textContent="Logged Out"
-  h3.textContent=`You are Logged Out Successfully!`
+  h2.textContent="Success"
+  h3.textContent=`You are Logged Out Successfully.`
   loginRedirect.style.display="none"
 }
 

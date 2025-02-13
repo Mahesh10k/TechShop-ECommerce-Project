@@ -265,10 +265,10 @@
   <section class="wrapper">
     <div class="form login">
       <header>Login</header>
-      <form action="#" onsubmit="loginProcess()">
+      <form action="#" id="LoginForm">
         <input type="text" placeholder="Email address" required id="loginemail" />
         <input type="password" placeholder="Password" required id="loginpassword" />
-        <!-- <a href="#">Forgot password?</a> -->
+        <a href="#" id="guest">Login as Guest</a>
         <input type="submit" value="Login" />
       </form>
     </div>
@@ -319,9 +319,7 @@
       //  signup validation
       document.querySelector("#signup").addEventListener("submit", (event) => {
         event.preventDefault();
-        debugger;
-
-
+       
         userName = document.getElementById("username").value.trim()
         userPassword = document.getElementById("userpassword").value.trim()
         userEmail = document.getElementById("useremail").value.trim()
@@ -340,7 +338,7 @@
 
 
         if (!nameReg.test(userName)) {
-          nameError.textContent = "The name should contains small and capitals letters with the length of 3.";
+          nameError.textContent = "The name should contains minimum 3 alphabets.";
           isSignup = false;
         }
 
@@ -364,7 +362,7 @@
           document.getElementById("useremail").value = ""
           wrapper.style.display = "none"
           setTimeout(() => {
-            signupAlert()
+            alertPopUp("Success","Your Signup Completed Successfully.")
             wrapper.style.display = "block"
           }, 2000)
           wrapper.classList.add("active");
@@ -373,7 +371,8 @@
       })
 
       //login validation
-      function loginProcess() {
+      document.getElementById("LoginForm").addEventListener("submit",(e)=>{
+        e.preventDefault()
         let loginEmail = document.getElementById("loginemail").value.trim()
         let loginPassword = document.getElementById("loginpassword").value.trim()
 
@@ -387,32 +386,33 @@
           document.getElementById("loginpassword").value = ""
           document.querySelector(".wrapper").style.display = "none"
           setTimeout(()=>{
-            const section = document.querySelector("#section"),
-              overlay = document.querySelector(".overlay"),
-              closeBtn = document.querySelector(".close-btn"),
-              loginRedirect = document.querySelector("#loginRedirect"),
-              h2 = document.querySelector("#h2"),
-              h3 = document.querySelector("#h3")
-            section.classList.add("active");
-            overlay.addEventListener("click", () => section.classList.remove("active"));
-            closeBtn.addEventListener("click", () => section.classList.remove("active"));
-            h2.textContent = "Login Success"
-            h3.textContent = `You are Loggedin Succesfully!`
-            document.getElementById("loginRedirect").style.display="none"
+            document.querySelector(".wrapper").style.display = "block"
+            alertPopUp("Sucess","Login Successful.")
             setTimeout(()=>{
               window.location.href = "index.html"
-            },2000)
+            },1000)
           },2000)
          
-
         } else {
-          wrongLoginAlert()
+          alertPopUp("Warning",`You are not Loggedin due to Incorrect Credentials. Please try to signUp`)
         }
-      }
+      })
+
+      //Guest Login
+        let Guest=document.querySelector("#guest")  
+        Guest.addEventListener("click",(e)=>{
+          e.preventDefault()
+          localStorage.setItem("Name","Guest")
+          alertPopUp("Success","You are Logged as Guest")
+          setTimeout(()=>{
+            window.location.href="index.html"
+          },1000)
+          localStorage.setItem("isLoggedIn", "true");          
+        })
 
 
-      // Signup confirmation
-      function signupAlert() {
+      // popup alert
+       function alertPopUp(h2Data,h3Data) {
         const section = document.querySelector("#section"),
           overlay = document.querySelector(".overlay"),
           closeBtn = document.querySelector(".close-btn"),
@@ -422,25 +422,8 @@
         section.classList.add("active");
         overlay.addEventListener("click", () => section.classList.remove("active"));
         closeBtn.addEventListener("click", () => section.classList.remove("active"));
-        h2.textContent = "SignUp"
-        h3.textContent = `Your Signup Completed Succesfully!`
-        document.getElementById("loginRedirect").style.display = "none"
-      }
-
-
-      // wrong credentials
-      function wrongLoginAlert() {
-        const section = document.querySelector("#section"),
-          overlay = document.querySelector(".overlay"),
-          closeBtn = document.querySelector(".close-btn"),
-          loginRedirect = document.querySelector("#loginRedirect"),
-          h2 = document.getElementById("h2"),
-          h3 = document.getElementById("h3")
-        section.classList.add("active");
-        overlay.addEventListener("click", () => section.classList.remove("active"));
-        closeBtn.addEventListener("click", () => section.classList.remove("active"));
-        h2.textContent = "Warning"
-        h3.textContent = `You are not Loggedin due to Incorrect Credentials. Please try to signUp`
+        h2.textContent = h2Data
+        h3.textContent = h3Data 
         document.getElementById("loginRedirect").style.display = "none"
       }
 
@@ -448,7 +431,7 @@
 
     </script>
 
-    <script src="script.js"></script>
+    <script src="script.js"></script> 
 
   </section>
 </body>
