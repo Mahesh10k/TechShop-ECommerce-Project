@@ -199,33 +199,37 @@ function viewCart() {
 }
 
 //searchFunction
+let productSearchForm=document.getElementById("Sform")
 let search = document.querySelector("#searchbtn");
-search.addEventListener("click", (event) => {
-  event.preventDefault();
-  if (localStorage.getItem("isLoggedIn") === "true") {
-    let keyword = document.getElementById("search").value.toLowerCase().trim();
-    Home.style.display = "none";
-    if (keyword == "") {
-      productsDiv.innerHTML = `Please Enter the Valid Name to Search`;
+productSearchForm.addEventListener("submit", searchProduct)
+search.addEventListener("click",searchProduct)
+function searchProduct(event){
+    event.preventDefault()
+    if (localStorage.getItem("isLoggedIn") === "true") {
+      let keyword = document.getElementById("search").value.toLowerCase().trim();
+      Home.style.display = "none";
+      if (keyword == "") {
+        productsDiv.innerHTML = `Please Enter the Valid Name to Search`;
+      }
+      // Filter products of saerch keyword
+      const filteredProducts = APIdata.filter(
+        (product) =>
+          product.Brand.toLowerCase().includes(keyword) ||
+          product.category.toLowerCase().includes(keyword) ||
+          product.Description.toLowerCase().includes(keyword)
+      );
+      console.log(filteredProducts);
+      if (filteredProducts.length === 0) {
+        productsDiv.innerHTML = `<p>No products found for "${keyword}".</p>`;
+        return;
+      }
+      Home.style.display = "none";
+      display(filteredProducts);
+    } else {
+      warningPopUp();
     }
-    // Filter products of saerch keyword
-    const filteredProducts = APIdata.filter(
-      (product) =>
-        product.Brand.toLowerCase().includes(keyword) ||
-        product.category.toLowerCase().includes(keyword) ||
-        product.Description.toLowerCase().includes(keyword)
-    );
-    console.log(filteredProducts);
-    if (filteredProducts.length === 0) {
-      productsDiv.innerHTML = `<p>No products found for "${keyword}".</p>`;
-      return;
-    }
-    Home.style.display = "none";
-    display(filteredProducts);
-  } else {
-    warningPopUp();
   }
-});
+
 
 
 //Logout Process
